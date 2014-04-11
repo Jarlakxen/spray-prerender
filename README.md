@@ -26,6 +26,7 @@ Use this Spray directive that prerenders a javascript-rendered page using an ext
     }
 
 
+`Note:` You need to extends or import PrerenderDirectives.
 `Note:` The first parameter of routePrerender is the ip and port of the Prerender server.
 
 ## How it works
