@@ -13,6 +13,8 @@ organization := "com.github.jarlakxen"
 
 crossScalaVersions := Seq("2.10.4")
 
+scalaVersion <<= (crossScalaVersions) { versions => versions.head }
+
 fork in run   := true
 
 publishMavenStyle := true
@@ -84,8 +86,9 @@ pomExtra := (
     </license>
   </licenses>
   <scm>
-  <url>git@github.com:Jarlakxen/spray-prerender.git</url>
-  <connection>scm:git:git@github.com:Jarlakxen/spray-prerender.git</connection>
+    <url>https://github.com/Jarlakxen/spray-prerender</url>
+    <connection>scm:git:git@github.com:Jarlakxen/spray-prerender.git</connection>
+    <developerConnection>scm:git:git@github.com:Jarlakxen/spray-prerender.git</developerConnection>
   </scm>
   <developers>
     <developer>
