@@ -1,9 +1,4 @@
 import sbt.Keys._
-import sbtrelease.ReleasePlugin._
-
-// ··· Settings ···
-
-seq(releaseSettings: _*)
 
 // ··· Project Info ···
 
@@ -11,7 +6,7 @@ name := "spray-prerender"
 
 organization := "com.github.jarlakxen"
 
-crossScalaVersions := Seq("2.10.4")
+crossScalaVersions := Seq("2.11.7")
 
 scalaVersion <<= (crossScalaVersions) { versions => versions.head }
 
@@ -20,20 +15,6 @@ fork in run   := true
 publishMavenStyle := true
 
 publishArtifact in Test := false
-
-// ··· Project Enviroment ···
-
-EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.Resource
-
-EclipseKeys.projectFlavor := EclipseProjectFlavor.Scala
-
-EclipseKeys.executionEnvironment := Some(EclipseExecutionEnvironment.JavaSE17)
-
-unmanagedSourceDirectories in Compile := (scalaSource in Compile).value :: Nil
-
-unmanagedSourceDirectories in Test := (scalaSource in Test).value :: Nil
-
-resourceDirectory in Compile := baseDirectory.value / "src" / "main" / "resources"
 
 
 // ··· Project Options ···
@@ -55,25 +36,29 @@ scalacOptions ++= Seq(
 
 // ··· Project Repositories ···
 
-
 resolvers ++= Seq(
     "spray repo"                     at "http://repo.spray.io/",
     "OSS"                            at "http://oss.sonatype.org/content/repositories/releases/")
 
 // ··· Project Dependancies···
 
+val vAkka     = "2.3.12"
+val vSpray    = "1.3.3"
+val vSpec2    = "3.6.4"
+val vJUnit    = "4.12"
+
 libraryDependencies ++= Seq(
   // --- Akka ---
-  "com.typesafe.akka"             %%  "akka-actor"            % "2.2.3"		%  "provided",
+  "com.typesafe.akka"             %%  "akka-actor"            % vAkka     %  "provided",
   // --- Spray ---
-  "io.spray"                      %   "spray-can"             % "1.2.1"		%  "provided",
-  "io.spray"                      %   "spray-routing"         % "1.2.1"		%  "provided",
-  "io.spray"                      %   "spray-client"          % "1.2.1",
+  "io.spray"                      %%  "spray-can"             % vSpray    %  "provided",
+  "io.spray"                      %%  "spray-routing"         % vSpray    %  "provided",
+  "io.spray"                      %%  "spray-client"          % vSpray,
   // --- Testing ---
-  "org.specs2"                    %%  "specs2-core"           % "2.3.10"  % "test",
-  "org.specs2"                    %%  "specs2-junit"          % "2.3.10"  % "test",
-  "io.spray"                      %   "spray-testkit"         % "1.2.1"   % "test",
-  "junit"                         %   "junit"                 % "4.11"    % "test"
+  "org.specs2"                    %%  "specs2-core"           % vSpec2    % "test",
+  "org.specs2"                    %%  "specs2-junit"          % vSpec2    % "test",
+  "io.spray"                      %%  "spray-testkit"         % vSpray    % "test",
+  "junit"                         %   "junit"                 % vJUnit    % "test"
 )
 
 pomExtra := (
@@ -98,8 +83,6 @@ pomExtra := (
     </developer>
   </developers>
 )
-
-credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
 
 publishTo <<= version { v =>
   val nexus = "http://oss.sonatype.org/"
