@@ -12,7 +12,7 @@ Use this Spray directive that prerenders a javascript-rendered page using an ext
 1- Add this dependency on your project:
 
 ```scala
-    "com.github.jarlakxen" %% "spray-prerender" % "1.1"
+    "com.github.jarlakxen" % "spray-prerender_2.10" % "1.0"
 ```
 
 2- Add this line to your code
